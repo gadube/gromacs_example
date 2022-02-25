@@ -17,6 +17,7 @@ mkdir -p /home/gad4877/proj/bigfoot/apps/GROMACS/{bigfootalign0,bigfootalign32,b
 for $a in $alignments
 do
     echo "Running GROMACS test for alignment $a" >> ./output/STATUS.out 2>&1
+    cp /home/gad4877/proj/bigfoot/gromacs_example/* /home/gad4877/proj/bigfoot/apps/GROMACS/bigfootalign$a/results/.
     cd /home/gad4877/proj/bigfoot/apps/GROMACS/bigfootalign$a/results
     . /home/gad4877/proj/bigfoot/apps/GROMACS/bigfootalign$a/bin/GMXRC
     # Tutorial from (http://www.mdtutorials.com/gmx/lysozyme) , Lysozyme in Water

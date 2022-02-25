@@ -1,0 +1,24 @@
+# Set the universe
+Universe = vanilla
+
+# Describe the target machine
+Requirements = (Machine == "boucanier.cs.northwestern.edu")
+
+# Set the environment
+Getenv = True
+
+# Set the priority
+priority = 0
+
+# Set the directories for execution
+Executable         = ./gromacs_github_run.sh
+log                = /home/gad4877/proj/bigfoot/logs/gromacs_run.log
+output             = /home/gad4877/proj/bigfoot/logs/gromacs_run.out
+error              = /home/gad4877/proj/bigfoot/logs/gromacs_run.err
+
+# Each job requires access to the whole machine
++IsWholeMachineJob      = true
++IsSuspensionJob        = false
+
+# List the tests
+Queue
