@@ -1,2 +1,3 @@
-# gromacs_example
-Example run of Gromacs for 1AKI Lysozyme in water
+# Gromacs Example
+
+Slightly modified version of the tutorial [Lysozyme in Water](http://www.mdtutorials.com/gmx/lysozyme/) by Justin A. Lemkul.
