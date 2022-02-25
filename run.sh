@@ -21,8 +21,8 @@ do
     . /home/gad4877/proj/bigfoot/apps/GROMACS/bigfootalign$a/bin/GMXRC
     # Tutorial from (http://www.mdtutorials.com/gmx/lysozyme) , Lysozyme in Water
 
-    # grab 1AKI from RSCB PDB https://www.rcsb.org/structure/1AKI, this is our structure
-    wget https://files.rcsb.org/download/1AKI.pdb
+    # # grab 1AKI from RSCB PDB https://www.rcsb.org/structure/1AKI, this is our structure
+    # wget https://files.rcsb.org/download/1AKI.pdb
 
     # remove water molecules from the pdb file, don't need them for this tutorial
     grep -v HOH 1AKI.pdb > 1AKI_clean.pdb
@@ -38,9 +38,9 @@ do
     echo "Running solvate command for alignment $a" >> ./output/STATUS.out 2>&1
     gmx solvate -cp 1AKI_newbox.gro -cs spc216.gro -o 1AKI_solv.gro -p topol.top
 
-    # grab ions file and use it to generate an atomic description of system
-    # Assemble .tpr file using grompp
-    wget http://www.mdtutorials.com/gmx/lysozyme/Files/ions.mdp
+    # # grab ions file and use it to generate an atomic description of system
+    # # Assemble .tpr file using grompp
+    # wget http://www.mdtutorials.com/gmx/lysozyme/Files/ions.mdp
     gmx grompp -f ions.mdp -c 1AKI_solv.gro -p topol.top -o ions.tpr
 
     # use genion to add ions to system, replacing some water molecules, choose group 13 for embedding ions in the solvent
@@ -49,7 +49,7 @@ do
     # ensure appropriate system by relaxing structure in energy minimization,
     # first assemble structure topology using grompp and the provided input parameter file
     echo "Running energy minimization for alignment $a" >> ./output/STATUS.out 2>&1
-    wget http://www.mdtutorials.com/gmx/lysozyme/Files/minim.mdp
+    # wget http://www.mdtutorials.com/gmx/lysozyme/Files/minim.mdp
     gmx grompp -f minim.mdp -c 1AKI_solv_ions.gro -p topol.top -o em.tpr
 
     # run on 12 threads and 1 MPI proc, name files em.*
@@ -60,7 +60,7 @@ do
 
     # create structure using provided .mpd input and run equilibration
     echo "Running pressure and density equilibration for alignment $a" >> ./output/STATUS.out 2>&1
-    wget http://www.mdtutorials.com/gmx/lysozyme/Files/nvt.mdp
+    # wget http://www.mdtutorials.com/gmx/lysozyme/Files/nvt.mdp
     gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
     OMP_PROC_BIND=spread OMP_PLACES=cores OMP_NUM_THREADS=$THREADS gmx mdrun -deffnm nvt
 
@@ -69,7 +69,7 @@ do
 
     # Previous step stabalized temperature of tye system, now we stabalize pressure and density
     echo "Running temperature equilibration for alignment $a" >> ./output/STATUS.out 2>&1
-    wget http://www.mdtutorials.com/gmx/lysozyme/Files/npt.mdp
+    # wget http://www.mdtutorials.com/gmx/lysozyme/Files/npt.mdp
     gmx grompp -f npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
     OMP_PROC_BIND=spread OMP_PLACES=cores OMP_NUM_THREADS=$THREADS gmx mdrun -deffnm npt
 
@@ -79,7 +79,7 @@ do
 
     # Run a 1 ns MD simulation, releasing restraints, using md input config
     echo "Running 1 ns MD sim for alignment $a" >> ./output/STATUS.out 2>&1
-    wget http://www.mdtutorials.com/gmx/lysozyme/Files/md.mdp
+    # wget http://www.mdtutorials.com/gmx/lysozyme/Files/md.mdp
     gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -o md_0_1.tpr
     OMP_PROC_BIND=spread OMP_PLACES=cores OMP_NUM_THREADS=$THREADS gmx mdrun -deffnm md_0_1
 
