@@ -1,7 +1,7 @@
 #!/bin/bash -e
 #THREADS=$1
 THREADS=24
-ALIGNMENTS=0 32 64
+ALIGNMENTS="0 32 64"
 
 cd /home/gad4877/proj/bigfoot
 rm -f ./output/STATUS.out
